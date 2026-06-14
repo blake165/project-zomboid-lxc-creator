@@ -10,7 +10,7 @@ and Build 41 vs Build 42 selection.
 Paste into the **Proxmox node shell** (as root):
 
 ```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/blake165/automated-projectzomboid-lxc-for-proxmox/main/proxmox-create-pz-lxc.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/blake165/automated-project-zomboid-lxc-for-proxmox/main/proxmox-create-pz-lxc.sh)"
 ```
 
 The wizard asks for container settings, then PZ settings (build, server name,
