@@ -30,7 +30,7 @@ echo "==> Installing base dependencies..."
 export DEBIAN_FRONTEND=noninteractive
 dpkg --add-architecture i386    # SteamCMD needs 32-bit libs
 apt-get update -qq
-apt-get install -y -qq locales curl wget ca-certificates \
+apt-get install -y -qq locales curl wget ca-certificates sudo \
   lib32gcc-s1 lib32stdc++6 libsdl2-2.0-0:i386 >/dev/null
 sed -i 's/^# *en_US.UTF-8/en_US.UTF-8/' /etc/locale.gen
 locale-gen en_US.UTF-8 >/dev/null 2>&1 || true
@@ -56,8 +56,8 @@ STEAMCMD="$(command -v steamcmd || echo "${PZ_HOME}/steamcmd/steamcmd.sh")"
 echo "==> Downloading Project Zomboid server (branch: ${PZ_BRANCH})..."
 BETA_ARGS=""
 [[ "${PZ_BRANCH}" == "unstable" ]] && BETA_ARGS="-beta unstable"
-# Run steamcmd as the pzuser so files aren't root-owned
-sudo -u "${PZUSER}" bash -c "
+# Run steamcmd as the pzuser so files aren't root-owned (runuser is built-in)
+runuser -u "${PZUSER}" -- bash -c "
   '${STEAMCMD}' +force_install_dir '${PZ_DIR}' +login anonymous \
     +app_update ${APPID} ${BETA_ARGS} validate +quit
 "
@@ -73,7 +73,7 @@ echo "==> Pre-seeding server config (name=${PZ_SERVERNAME})..."
 # directory and a minimal ini so the admin password + ram are set up front,
 # avoiding the interactive first-run password prompt.
 ZOMBOID_DIR="${PZ_HOME}/Zomboid/Server"
-sudo -u "${PZUSER}" mkdir -p "${ZOMBOID_DIR}"
+runuser -u "${PZUSER}" -- mkdir -p "${ZOMBOID_DIR}"
 
 # JVM heap: PZ reads -Xmx from ProjectZomboid64.json / start-server.sh args.
 # We pass RAM via the service ExecStart instead, which is the robust way.

@@ -3,7 +3,7 @@
 # Project Zomboid dedicated server LXC - automated provisioning for Proxmox
 #
 # One-liner from the Proxmox node shell (root):
-#   bash -c "$(curl -fsSL https://raw.githubusercontent.com/blake165/automated-projectzomboid-lxc-for-proxmox/main/proxmox-create-pz-lxc.sh)"
+#   bash -c "$(curl -fsSL https://raw.githubusercontent.com/blake165/project-zomboid-lxc-creator/main/proxmox-create-pz-lxc.sh)"
 #
 # Creates an LXC, installs SteamCMD + the PZ dedicated server inside it, sets it
 # to autostart, and pre-seeds your server name, admin password, RAM, and branch.
@@ -38,7 +38,7 @@ PZ_ADMINPASS="${PZ_ADMINPASS:-}"
 PZ_RAM_MB="${PZ_RAM_MB:-6144}"            # JVM heap (leave headroom under MEMORY)
 PZ_GAMEPORT="${PZ_GAMEPORT:-16261}"
 
-RAW_BASE="https://raw.githubusercontent.com/blake165/automated-projectzomboid-lxc-for-proxmox/main"
+RAW_BASE="https://raw.githubusercontent.com/blake165/project-zomboid-lxc-creator/main"
 # -----------------------------------------------------------------------------
 
 if [[ $EUID -ne 0 ]]; then echo "Run as root on the Proxmox host." >&2; exit 1; fi
